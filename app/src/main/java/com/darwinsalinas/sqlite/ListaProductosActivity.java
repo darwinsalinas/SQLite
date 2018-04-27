@@ -29,16 +29,17 @@ public class ListaProductosActivity extends AppCompatActivity {
 
     private ArrayList<String> getProductos() {
         ProductosOpenHelper admin = new ProductosOpenHelper(this, "inventario", null, 1);
-        String[] resutlColumns = new String[] {"nombre"};
+        String[] resutlColumns = new String[] {"nombre", "precio"};
         SQLiteDatabase bd = admin.getWritableDatabase();
-        Cursor filas = bd.query(true, "productos", resutlColumns, null, null, null, null, null, null );
+        Cursor filas = bd.query(false, "productos", resutlColumns, null, null, null, null, null, null );
 
         ArrayList<String> lista = new ArrayList<String>();
         if(filas.moveToFirst()){
             do {
                 String nombre=filas.getString(0);
-                Log.e("nombre",nombre);
-                lista.add(nombre);
+                String precio=filas.getString(1);
+                //Log.e("nombre",nombre);
+                lista.add(nombre + " - C$" + precio);
             }while (filas.moveToNext());
         }
         return lista;
